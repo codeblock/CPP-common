@@ -1,17 +1,18 @@
 #define _CRT_SECURE_NO_WARNINGS
 
-#ifndef CB_LOGGER_H_
-#define CB_LOGGER_H_
+#ifndef CB_COMMON_LOGGER_H_
+#define CB_COMMON_LOGGER_H_
 
 #include <cstdio>
 #include <mutex>
 
 #include "include/cb/defines.h"
 
-#define CB_LOGGER_H_LEN_PATH 256
-#define CB_LOGGER_H_LEN_CONTENTS 512
+#define CB_COMMON_LOGGER_H_LEN_PATH 256
+#define CB_COMMON_LOGGER_H_LEN_CONTENTS 512
 
 namespace cb {
+namespace common {
 
 class Logger {
 public:
@@ -33,7 +34,7 @@ private:
   std::mutex m_mtx;
   unsigned int m_cnt;
   unsigned int m_split;
-  char m_path[CB_LOGGER_H_LEN_PATH];
+  char m_path[CB_COMMON_LOGGER_H_LEN_PATH];
   char m_currinfo[CB_DEFINES_H_LEN_ISO8601];
   FILE* m_fp;
 
@@ -48,6 +49,7 @@ private:
   static Logger m_instance;
 };
 
+} // namespace common
 } // namespace cb
 
 #endif

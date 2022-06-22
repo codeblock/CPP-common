@@ -1,5 +1,5 @@
-#ifndef CB_POOL_HPP_
-#define CB_POOL_HPP_
+#ifndef CB_COMMON_POOL_HPP_
+#define CB_COMMON_POOL_HPP_
 
 #include <ctime>
 #include <vector>
@@ -7,9 +7,10 @@
 #include <mutex>
 
 #include "include/cb/defines.h"
-#include "include/cb/logger.h"
+#include "include/cb/common/logger.h"
 
 namespace cb {
+namespace common {
 
 class IPoolResource {
  public:
@@ -76,7 +77,7 @@ void Pool<T>::set(unsigned int n) {
         ps.use = 0;
         m_vec.push_back(ps);
 
-        cb::Logger::log(cb::Logger::eLevel::eInfo, "%s%hd", "Pool set #", (s + 1));
+        cb::common::Logger::log(cb::common::Logger::eLevel::eInfo, "%s%hd", "Pool set #", (s + 1));
       }
     }
     m_mtx.unlock();
@@ -102,7 +103,7 @@ T* Pool<T>::get(void) {
           m_mtx.lock();
           if (it->use == 0) {
             if (time(NULL) - it->past > it->timeout) {
-              cb::Logger::log(cb::Logger::eLevel::eDebug, "%s%hd%s%d%s%d%s", "Pool refresh #", s, " for timeout (", (time(NULL) - it->past), " / ", it->timeout, " sec)");
+              cb::common::Logger::log(cb::common::Logger::eLevel::eDebug, "%s%hd%s%d%s%d%s", "Pool refresh #", s, " for timeout (", (time(NULL) - it->past), " / ", it->timeout, " sec)");
               it->body->disconnect();
               it->body->connect();
             }
@@ -110,7 +111,7 @@ T* Pool<T>::get(void) {
             it->past = time(NULL);
             it->use = 1;
 
-            cb::Logger::log(cb::Logger::eLevel::eInfo, "%s%hd", "Pool get #", s);
+            cb::common::Logger::log(cb::common::Logger::eLevel::eInfo, "%s%hd", "Pool get #", s);
           }
           m_mtx.unlock();
 
@@ -126,7 +127,7 @@ T* Pool<T>::get(void) {
           wait = m_wait;
           past = time(NULL);
         }
-        cb::Logger::log(cb::Logger::eLevel::eDebug, "%s%d%s", " sleep ................................................. ", wait, " sec");
+        cb::common::Logger::log(cb::common::Logger::eLevel::eDebug, "%s%d%s", " sleep ................................................. ", wait, " sec");
         WAIT_A_SECONDS(wait);
       }
     }
@@ -147,7 +148,7 @@ void Pool<T>::release(T* rsc) {
       if (it->use == 1 && m_hash(it->body) == m_hash(rsc)) {
         it->use = 0;
 
-        cb::Logger::log(cb::Logger::eLevel::eInfo, "%s%d", "Pool release #", s);
+        cb::common::Logger::log(cb::common::Logger::eLevel::eInfo, "%s%d", "Pool release #", s);
         break;
       }
     }
@@ -169,7 +170,7 @@ void Pool<T>::clear(void) {
         delete it->body; // warning: deleting object of polymorphic class type ‘PoolMySQL’ which has non-virtual destructor might cause undefined behaviour [-Wdelete-non-virtual-dtor]
         it->use = 0;
 
-        cb::Logger::log(cb::Logger::eLevel::eInfo, "%s%d", "Pool delete #", s);
+        cb::common::Logger::log(cb::common::Logger::eLevel::eInfo, "%s%d", "Pool delete #", s);
       }
       m_vec.clear();
       m_size = m_vec.size();
@@ -178,6 +179,7 @@ void Pool<T>::clear(void) {
   }
 }
 
+} // namespace common
 } // namespace cb
 
 #endif

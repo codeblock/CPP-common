@@ -7,21 +7,22 @@
 #include <cstdarg>
 
 #include "include/cb/defines.h"
-#include "include/cb/times.h"
-#include "include/cb/logger.h"
+#include "include/cb/common/times.h"
+#include "include/cb/common/logger.h"
 
 #if defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__)
 # include <direct.h>
 #endif
 
 namespace cb {
+namespace common {
 
 Logger::Logger(void) {
   m_cnt = 0;
   m_split = 10;
   m_fp = NULL;
   m_currinfo[CB_DEFINES_H_LEN_ISO8601] = { '\0' };
-  m_path[CB_LOGGER_H_LEN_PATH] = { '\0' };
+  m_path[CB_COMMON_LOGGER_H_LEN_PATH] = { '\0' };
   // fopen
 }
 
@@ -77,7 +78,7 @@ unsigned int Logger::setSplit(unsigned int split) {
 bool Logger::setPath(const char* path)
 {
   bool rtn = true;
-  char path_tmp[CB_LOGGER_H_LEN_PATH] = {};
+  char path_tmp[CB_COMMON_LOGGER_H_LEN_PATH] = {};
   struct stat sb;
 
   strcpy(path_tmp, path);
@@ -85,7 +86,7 @@ bool Logger::setPath(const char* path)
     path_tmp[strlen(path_tmp) - 1] = '\0';
   }
   //if (strlen(LOGDIR) == 0) {
-  memcpy((void*)m_instance.m_path, path_tmp, CB_LOGGER_H_LEN_PATH);
+  memcpy((void*)m_instance.m_path, path_tmp, CB_COMMON_LOGGER_H_LEN_PATH);
   //}
 
   rtn = stat(path_tmp, &sb);
@@ -116,10 +117,10 @@ void Logger::log(eLevel level, const char* format, ...)
   struct tm* ptm;
   char timeinfo[CB_DEFINES_H_LEN_ISO8601] = { '\0' };
   char currinfo[CB_DEFINES_H_LEN_ISO8601] = { '\0' };
-  char filename[CB_LOGGER_H_LEN_PATH] = { '\0' };
-  char filecontents[CB_LOGGER_H_LEN_CONTENTS] = { '\0' };
+  char filename[CB_COMMON_LOGGER_H_LEN_PATH] = { '\0' };
+  char filecontents[CB_COMMON_LOGGER_H_LEN_CONTENTS] = { '\0' };
 
-  ptm = cb::times::iso8601(timeinfo, 0);
+  ptm = cb::common::times::iso8601(timeinfo, 0);
 
   strftime(currinfo, CB_DEFINES_H_LEN_ISO8601, "%Y-%m-%d-%H", ptm);
   sprintf(&currinfo[strlen(currinfo)], "-%02d", ptm->tm_min / m_instance.m_split % m_instance.m_split);
@@ -154,4 +155,5 @@ const char* const Logger::LEVELS[] = {
 };
 Logger Logger::m_instance = Logger();
 
+} // namespace common
 } // namespace cb

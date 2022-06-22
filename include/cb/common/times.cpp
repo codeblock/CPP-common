@@ -48,9 +48,10 @@ int gettimeofday(struct timeval *tp, struct timezone *tzp) {
 # include <sys/time.h>
 #endif
 
-#include "include/cb/times.h"
+#include "include/cb/common/times.h"
 
 namespace cb {
+namespace common {
 
 namespace times {
 
@@ -99,4 +100,5 @@ struct tm* iso8601(char *timeexpr, unsigned long long utmilli) {
 
 } // namespace times
 
+} // namespace common
 } // namespace cb
