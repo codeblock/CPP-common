@@ -1,5 +1,5 @@
-#ifndef CB_COMMON_UTILS_H
-#define CB_COMMON_UTILS_H
+#ifndef CB_COMMON_UTILS_H_
+#define CB_COMMON_UTILS_H_
 
 //namespace cb {
 //namespace common {

@@ -1,5 +1,5 @@
-#ifndef CB_COMMON_TIMES_H
-#define CB_COMMON_TIMES_H
+#ifndef CB_COMMON_TIMES_H_
+#define CB_COMMON_TIMES_H_
 
 #include "include/cb/common/defines.h"
 
