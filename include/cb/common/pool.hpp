@@ -6,7 +6,7 @@
 #include <functional> // hash
 #include <mutex>
 
-#include "include/cb/defines.h"
+#include "include/cb/common/defines.h"
 #include "include/cb/common/logger.h"
 
 namespace cb {

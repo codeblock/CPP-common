@@ -6,7 +6,7 @@
 #include <cstdio>
 #include <mutex>
 
-#include "include/cb/defines.h"
+#include "include/cb/common/defines.h"
 
 #define CB_COMMON_LOGGER_H_LEN_PATH 256
 #define CB_COMMON_LOGGER_H_LEN_CONTENTS 512
@@ -15,22 +15,22 @@ namespace cb {
 namespace common {
 
 class Logger {
-public:
+ public:
   enum class eLevel : unsigned short {
-    eEror = 0,
+    eError = 0,
     eWarn,
     eInfo,
     eDebug,
   };
   static const char* const LEVELS[];
 
-private:
+ private:
   Logger(void);
   Logger(const Logger& rhw);
   Logger& operator=(const Logger& rhw);
   ~Logger(void);
 
-private:
+ private:
   std::mutex m_mtx;
   unsigned int m_cnt;
   unsigned int m_split;
@@ -38,14 +38,14 @@ private:
   char m_currinfo[CB_DEFINES_H_LEN_ISO8601];
   FILE* m_fp;
 
-public:
+ public:
   static unsigned int setSplit(unsigned int split);
   static bool setPath(const char* path);
   static void log(eLevel level, const char* format, ...);
 
-private:
+ private:
   void writeFile(eLevel level, const char* timeinfo, const char* currinfo, const char* filename, const char* filecontents);
-private:
+ private:
   static Logger m_instance;
 };
 

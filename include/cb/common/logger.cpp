@@ -6,7 +6,7 @@
 #include <ctime>
 #include <cstdarg>
 
-#include "include/cb/defines.h"
+#include "include/cb/common/defines.h"
 #include "include/cb/common/times.h"
 #include "include/cb/common/logger.h"
 
@@ -120,7 +120,7 @@ void Logger::log(eLevel level, const char* format, ...)
   char filename[CB_COMMON_LOGGER_H_LEN_PATH] = { '\0' };
   char filecontents[CB_COMMON_LOGGER_H_LEN_CONTENTS] = { '\0' };
 
-  ptm = cb::common::times::iso8601(timeinfo, 0);
+  ptm = times::iso8601(timeinfo, 0);
 
   strftime(currinfo, CB_DEFINES_H_LEN_ISO8601, "%Y-%m-%d-%H", ptm);
   sprintf(&currinfo[strlen(currinfo)], "-%02d", ptm->tm_min / m_instance.m_split % m_instance.m_split);

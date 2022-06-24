@@ -5,6 +5,8 @@
 #include <ctime>
 
 #if ((defined(_WIN32) || defined(_WIN64)) && !defined(__CYGWIN__) && !defined(__MINGW32__) && !defined(__MINGW64__))
+# include <WinSock2.h>
+//# define _WINSOCKAPI_
 // https://stackoverflow.com/questions/1676036/what-should-i-use-to-replace-gettimeofday-on-windows
 # include <Windows.h>
 # include <cstdint>

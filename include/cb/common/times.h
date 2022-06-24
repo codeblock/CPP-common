@@ -1,7 +1,7 @@
 #ifndef CB_COMMON_TIMES_H
 #define CB_COMMON_TIMES_H
 
-#include "include/cb/defines.h"
+#include "include/cb/common/defines.h"
 
 namespace cb {
 namespace common {
