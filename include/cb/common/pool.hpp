@@ -37,8 +37,8 @@ class Pool {
   void release(T* rsc);
   void clear(void);
  private:
-  Pool(const Pool& rhw);
-  Pool& operator =(const Pool& rhw);
+  Pool(const Pool& rhs);
+  Pool& operator =(const Pool& rhs);
   void* operator new (std::size_t) throw (std::bad_alloc); // prevent dynamic allocation
  private:
   std::mutex m_mtx;

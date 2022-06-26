@@ -26,8 +26,8 @@ class Logger {
 
  private:
   Logger(void);
-  Logger(const Logger& rhw);
-  Logger& operator=(const Logger& rhw);
+  Logger(const Logger& rhs);
+  Logger& operator=(const Logger& rhs);
   ~Logger(void);
 
  private:
