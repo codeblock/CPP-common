@@ -31,15 +31,15 @@ class Pool {
  public:
   Pool(void);
   ~Pool(void);
+  Pool(const Pool& rhs) = delete;
+  Pool& operator =(const Pool& rhs) = delete;
+  void* operator new (std::size_t) = delete;
 
   void set(unsigned int n);
   T* get(void);
   void release(T* rsc);
   void clear(void);
- private:
-  Pool(const Pool& rhs);
-  Pool& operator =(const Pool& rhs);
-  void* operator new (std::size_t) throw (std::bad_alloc); // prevent dynamic allocation
+
  private:
   std::mutex m_mtx;
   int m_size;
