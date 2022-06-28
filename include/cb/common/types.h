@@ -1,6 +1,7 @@
 #ifndef CB_COMMON_TYPES_H_
 #define CB_COMMON_TYPES_H_
 
+#include <string>
 #include <unordered_map>
 
 namespace cb {
