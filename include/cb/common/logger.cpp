@@ -63,6 +63,7 @@ void Logger::writeFile(eLevel level, const char* timeinfo, const char* currinfo,
 
   if (m_fp != NULL) {
     fprintf(m_fp, "[%s][%s] %s\n", timeinfo, LEVELS[static_cast<int>(level)], filecontents);
+    fflush(m_fp);
     printf("[%s][%s] %s\n", timeinfo, LEVELS[static_cast<int>(level)], filecontents);
   }
 
